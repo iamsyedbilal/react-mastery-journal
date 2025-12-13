@@ -6,21 +6,47 @@ import QueueDisplay from "./components/QueueDisplay";
 function App() {
   const [queue, setQueue] = useState([]);
 
-  function addToQueue(params) {}
+  // Add new customer
+  function addToQueue(username, serviceType) {
+    setQueue([
+      ...queue,
+      {
+        id: Date.now(),
+        username,
+        serviceType,
+        status: "waiting",
+      },
+    ]);
+  }
 
-  function updateStatus(params) {}
+  // Update customer status
+  function updateQueue(id, newStatus) {
+    setQueue(
+      queue.map((customer) =>
+        customer.id === id ? { ...customer, status: newStatus } : customer
+      )
+    );
+  }
 
-  function removeFromQueue(params) {}
+  // Remove customer
+  function removeQueue(id) {
+    setQueue(queue.filter((customer) => customer.id !== id));
+  }
 
   return (
-    <div>
-      <header>
-        <h2>Queue Management System</h2>
-        <p>Manage Your Coustomers efficently</p>
+    <div className="app-container">
+      <header className="app-header">
+        <h2 className="app-title">Queue Management System</h2>
+        <p className="app-subtitle">Manage your customers efficiently</p>
       </header>
-      <main>
-        <QueueForm />
-        <QueueDisplay />
+
+      <main className="app-main">
+        <QueueForm addToQueue={addToQueue} />
+        <QueueDisplay
+          queue={queue}
+          updateQueue={updateQueue}
+          removeQueue={removeQueue}
+        />
       </main>
     </div>
   );
