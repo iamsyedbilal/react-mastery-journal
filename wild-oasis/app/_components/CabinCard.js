@@ -6,52 +6,60 @@ function CabinCard({ cabin }) {
   const { id, name, maxCapacity, regularPrice, discount, image } = cabin;
 
   return (
-    <div className="flex border-primary-800 border">
-      <Image
-        width={300}
-        height={300}
-        src={image}
-        alt={`Cabin ${name}`}
-        className="flex-1 border-r border-primary-800"
-      />
+    <div
+      className="group overflow-hidden border border-primary-800 bg-primary-950
+      transition-all duration-300 hover:shadow-[0_0_40px_rgba(198,153,99,0.15)]">
+      {/* Image */}
+      <div className="relative h-56 sm:h-64">
+        <Image
+          src={image}
+          alt={`Cabin ${name}`}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      </div>
 
-      <div className="grow">
-        <div className="pt-5 pb-4 px-7 bg-primary-950">
-          <h3 className="text-accent-500 font-semibold text-2xl mb-3">
-            Cabin {name}
-          </h3>
+      {/* Content */}
+      <div className="p-5 sm:p-6">
+        <h3 className="text-xl sm:text-2xl font-semibold text-accent-500 mb-3">
+          Cabin {name}
+        </h3>
 
-          <div className="flex gap-3 items-center mb-2">
-            <UsersIcon className="h-5 w-5 text-primary-600" />
-            <p className="text-lg text-primary-200">
-              For up to <span className="font-bold">{maxCapacity}</span> guests
-            </p>
-          </div>
-
-          <p className="flex gap-3 justify-end items-baseline">
-            {discount > 0 ? (
-              <>
-                <span className="text-3xl font-[350]">
-                  ${regularPrice - discount}
-                </span>
-                <span className="line-through font-semibold text-primary-600">
-                  ${regularPrice}
-                </span>
-              </>
-            ) : (
-              <span className="text-3xl font-[350]">${regularPrice}</span>
-            )}
-            <span className="text-primary-200">/ night</span>
-          </p>
+        <div className="flex items-center gap-2 text-primary-200 mb-4">
+          <UsersIcon className="h-5 w-5 text-primary-500" />
+          <span>
+            Up to <span className="font-bold">{maxCapacity}</span> guests
+          </span>
         </div>
 
-        <div className="bg-primary-950 border-t border-t-primary-800 text-right">
-          <Link
-            href={`/cabins/${id}`}
-            className="border-l border-primary-800 py-4 px-6 inline-block hover:bg-accent-600 transition-all hover:text-primary-900">
-            Details & reservation &rarr;
-          </Link>
+        {/* Price */}
+        <div className="flex justify-between items-end mb-6">
+          {discount > 0 ? (
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-light text-primary-50">
+                ${regularPrice - discount}
+              </span>
+              <span className="line-through text-primary-500">
+                ${regularPrice}
+              </span>
+            </div>
+          ) : (
+            <span className="text-2xl font-light text-primary-50">
+              ${regularPrice}
+            </span>
+          )}
+
+          <span className="text-primary-400 text-sm">/ night</span>
         </div>
+
+        {/* Button */}
+        <Link
+          href={`/cabins/${id}`}
+          className="block text-center rounded-lg border border-primary-800
+          py-3 text-primary-100 transition-all duration-300
+          hover:bg-accent-500 hover:text-primary-900">
+          View details →
+        </Link>
       </div>
     </div>
   );
