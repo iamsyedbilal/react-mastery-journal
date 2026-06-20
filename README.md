@@ -1,153 +1,89 @@
-# 🚀 My React.js Learning Journey
+# 🚀 React.js Learning Journey
 
-Welcome to my React.js learning journal!  
-This repository documents my step-by-step progress as I explore and practice React concepts — from the basics to advanced topics.
+A documented journey through React.js — from fundamentals to advanced patterns, with hands-on projects along the way.
+
+This repo tracks my progress as I build real applications while learning: hooks, routing, state management, Supabase integration, and Next.js.
+
+🔗 **Portfolio:** [syedbilal.vercel.app](https://syedbilal.vercel.app)  
+🔗 **Currently freelancing:** [Fiverr](https://www.fiverr.com/iamsyedbilal) · [Upwork](https://www.upwork.com/freelancers/~0188c7ff53f8a52869)
 
 ---
 
-## 📚 Episodes
+## 📁 Projects in this repo
+
+| Project | Description | Stack |
+|---|---|---|
+| [`wild-oasis`](./wild-oasis) | Cabin booking dashboard with auth, check-in/checkout | Next.js, Supabase |
+| [`supabase-app`](./supabase-app) | Practice app exploring Supabase auth & database | React, Supabase |
+| [`quiz-app`](./quiz-app) | Interactive quiz app with score tracking | React |
+| [`hooks`](./hooks) | Deep dive practice on React Hooks (useState, useEffect, custom hooks) | React |
+| [`QueueManagement`](./QueueManagement) | Queue management system with account pages | React |
+
+---
+
+## 📚 Learning Episodes
 
 - [Episode 1](./epi_1) → **Getting Started with React**
-
-  - **epi_1.1** → Three ways to add an `<h1>`:
-    1. Manually inside HTML
-    2. Dynamically with Vanilla JS (`document.createElement`)
-    3. Preparing React setup via CDN
-  - **epi_1.2** → First React code:
-    - Using `React.createElement` to build an `<h1>`
-    - Rendering with `ReactDOM.createRoot().render()`
-  - **epi_1.3** → Separating concerns:
-    - Moved React code to a separate **`app.js`** file
-    - Added external **`style.css`** for styling
-    - Wrote cleaner, modular code (HTML + JS + CSS separated)
-  - **epi_1.4** → Nested & sibling elements:
-    - Built nested elements using `React.createElement`
-    - Added multiple siblings inside a parent
-    - Observed how verbose and hard-to-read core React code becomes
-    - Motivation for moving towards **JSX**
+  - Three ways to add an `<h1>`: manual HTML, vanilla JS, React via CDN
+  - First React code with `React.createElement` and `ReactDOM.createRoot().render()`
+  - Separating concerns — moved code into `app.js` and `style.css`
+  - Nested & sibling elements, motivation for moving to JSX
 
 - [Episode 2](./epi_2) → **Setting up a React Project**
-
-  - Installed **React** and **ReactDOM** from npm
-  - Introduced **Parcel bundler** for development
-  - Used **ES6 imports** instead of CDN scripts
-  - Rendered first element (`<h1>Hey There Everyone</h1>`) with modern setup
-  - Learned how `index.html`, `app.js`, and `package.json` work together
+  - Installed React and ReactDOM from npm
+  - Introduced Parcel bundler, ES6 imports
+  - Rendered first element with modern setup
 
 - [Episode 3](./epi_3) → **React Components**
-
-  - Introduced **React Components** (the building blocks of any React app)
-  - Learned the two types:
-    - **Class-based components** → older way, rarely used now
-    - **Function-based components** → modern standard (99% developers use these)
-  - Created first **functional component (`App`)** that returns JSX
-  - Added another simple component (`AnotherApp`) for practice
-  - Setup `package.json` scripts:
-    - `npm start` → runs app with Parcel and opens in browser
-    - `npm run build` → builds production-ready files
+  - Class-based vs function-based components
+  - First functional component, package.json scripts (`npm start`, `npm run build`)
 
 - [Episode 4](./epi_4) → **Food Ordering App (Basic Structure)**
-
-  - Built an `App Component`
-  - Built a `Header Component` with:
-    - Logo
-    - Navigation Items
-    - Cart section
-  - Built a `Body Component`
-  - Built a `RestaurantCard Component`
-  - Used **static mock data** initially (from `mockData.js`)
-  - Made cards **dynamic with props**:
-    - Props = just a JavaScript object
-    - Destructured props for cleaner code (`const { name, cuisines } = props`)
-  - Rendered multiple restaurants dynamically using **Array.map()**
+  - Built App, Header, Body, and RestaurantCard components
+  - Dynamic props, destructuring, `Array.map()` rendering
 
 - [Episode 5](./epi_4) → **Folder Structure, Hooks & Props Deep Dive**
-  - Organized project with proper **folder structure**:
-    - `components/` → React Components
-    - `utils/` → constants, mock data, helpers
-  - Introduced **React Hooks**:
-    - `useState` → to manage state (example: filtering restaurants)
-  - Built a **Filter button** to show _Top Rated Restaurants_
-  - Reinforced the concept of **Props**:
-    - Props = just a JavaScript object
-    - Used **destructuring** for cleaner code:
-      ```js
-      const { name, cuisines } = props;
-      ```
-  - Discussed **Config-driven UI**:
-    - Real-world apps render UI based on backend data/config
-    - This allows flexibility and scalability
-    - A good frontend engineer = good UI layer + good data layer
+  - Proper folder structure (`components/`, `utils/`)
+  - Introduced `useState`, built a filter feature
+  - Config-driven UI concepts
+
 - [Episode 6](./epi_4) → **Shimmer, useEffect & Dynamic Data**
+  - Shimmer UI loading state
+  - `useEffect` for API calls, real backend data fetching
+  - Search functionality, `useState` vs `useEffect`
 
-  - Added a **Shimmer UI** (loading placeholder) while data is being fetched
-  - Introduced **`useEffect` hook**:
-    - Used for side-effects (like API calls)
-    - Fetches restaurant data from **real backend API** instead of static mock data
-  - Implemented **dynamic rendering**:
-    - Data is loaded and displayed once the API response is received
-  - Built a **Search functionality**:
-    - Input box + button to filter restaurants by name
-    - Combined with existing **Top Rated filter**
-  - Key learning:
+- [Episode 7](./epi_4) → **React Router & Dynamic Routing**
+  - Multi-page routing with React Router
+  - Dynamic routes (`/restaurant/:id`)
+  - SPA navigation without reloads
 
-    - Difference between **useState vs useEffect**
-    - Importance of **conditional rendering** (Shimmer when loading vs cards when data is ready)
+- [Episode 8](./epi_4) → **Class Components vs Function Components**
+  - Lifecycle methods vs Hooks
+  - Hands-on rewrite of class component into functional component
 
-    - [Episode 7](./epi_4) → **React Router & Dynamic Routing**
-
-  - Installed and setup **React Router**
-  - Created multiple pages/components:
-    - `Home`
-    - `About`
-    - `Contact`
-    - `Cart`
-    - `RestaurantMenu` (dynamic route)
-  - Used **`<Link>`** for navigation (instead of `<a>` to avoid page reloads)
-  - Introduced **Dynamic Routing**:
-    - Example: `/restaurant/:id`
-    - Fetches menu data for a specific restaurant using route params
-  - Updated **Header navigation** to use React Router
-  - Key learning: how to switch between pages **without reloading** (SPA behavior)
-
-  - [Episode 8](./epi_4) → **Class Components vs Function Components**
-  - **Class Components**:
-    - Extend `React.Component`
-    - Use `render()` method
-    - State managed with `this.state`
-    - Lifecycle methods:
-      - `constructor`
-      - `componentDidMount`
-      - `componentDidUpdate`
-      - `componentWillUnmount`
-  - **Function Components**:
-    - Simpler, just a JS function
-    - Use **Hooks** (`useState`, `useEffect`) instead of lifecycle methods
-    - Cleaner and shorter code
-  - **Key Differences**:
-    - Classes are **stateful** with lifecycle methods
-    - Functions achieve same with **hooks**
-    - Classes are rarely used in modern React (legacy code only)
-  - **Hands-on**:
-    - Built a `UserClass` component with `constructor`, `render`, and lifecycle logs
-    - Rewrote the same with a functional component using `useState` + `useEffect`
+- *(More episodes coming soon...)*
 
 ---
-
-- (More episodes coming soon...)
 
 ## 🎯 Goals of This Repo
 
-- Keep track of my React learning journey
-- Share simple, runnable code examples
-- Build a solid foundation before moving to advanced concepts
+- Document my React learning journey with real, runnable examples
+- Build production-style projects, not just isolated exercises
+- Establish a strong foundation before moving into Next.js, Node.js, and full stack development
 
 ---
 
 ## 🛠️ How to Run
 
-1. Clone this repo:
-   ```bash
-   git clone https://github.com/iamsyedbilal/react-learning.git
-   cd react
-   ```
+```bash
+git clone https://github.com/iamsyedbilal/react-learning.git
+cd react-learning
+```
+
+Each project folder contains its own setup instructions.
+
+---
+
+## 👤 About Me
+
+I'm Syed Bilal, a self-taught React & TypeScript developer from Karachi, Pakistan. I've built production-ready apps including [RestoMetrics](https://resto-metrics.vercel.app) and [Bookmark Manager](https://bookmark-manager-tx3d.vercel.app), and I'm currently freelancing while continuing to learn and build.
