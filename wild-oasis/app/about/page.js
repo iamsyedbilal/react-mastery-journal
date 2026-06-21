@@ -2,12 +2,17 @@ import Image from "next/image";
 import image1 from "@/public/about-1.jpg";
 import image2 from "@/public/about-2.jpg";
 import Link from "next/link";
+import { getCabins } from "../_lib/data-service";
+
+export const revalidate = 86400;
 
 export const metadata = {
   title: "About",
 };
 
-export default function Page() {
+export default async function Page() {
+  const cabins = await getCabins();
+
   return (
     <div className="mx-auto max-w-7xl px-6 py-16 lg:py-24 text-primary-100">
       {/* TOP SECTION */}
@@ -26,8 +31,9 @@ export default function Page() {
             </p>
 
             <p>
-              Our 8 luxury cabins provide a cozy base, but the real freedom
-              comes from the surrounding mountains, forests, and silence.
+              Our {cabins.length} luxury cabins provide a cozy base, but the
+              real freedom comes from the surrounding mountains, forests, and
+              silence.
             </p>
 
             <p>
