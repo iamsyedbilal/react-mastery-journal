@@ -1,27 +1,41 @@
-import { getCountries } from "@/app/_lib/data-service";
+"use client";
 
-// Let's imagine your colleague already built this component 😃
+import { useState } from "react";
+import { getCountryDataList, getEmojiFlag } from "countries-list";
 
-async function SelectCountry({ defaultCountry, name, id, className }) {
-  const countries = await getCountries();
-  const flag =
-    countries.find((country) => country.name === defaultCountry)?.flag ?? "";
+const countries = getCountryDataList()
+  .map((c) => ({
+    name: c.name,
+    flag: getEmojiFlag(c.iso2),
+  }))
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+export default function SelectCountry({
+  defaultCountry = "",
+  onChange = () => {},
+}) {
+  const [selected, setSelected] = useState(defaultCountry);
+
+  function handleChange(e) {
+    const value = e.target.value;
+    setSelected(value);
+    onChange(value);
+  }
 
   return (
     <select
-      name={name}
-      id={id}
-      // Here we use a trick to encode BOTH the country name and the flag into the value. Then we split them up again later in the server action
-      defaultValue={`${defaultCountry}%${flag}`}
-      className={className}>
-      <option value="">Select country...</option>
-      {countries.map((c) => (
-        <option key={c.name} value={`${c.name}%${c.flag}`}>
-          {c.name}
+      value={selected}
+      onChange={handleChange}
+      className="w-full rounded-lg bg-primary-900 px-5 py-3 text-primary-100 border border-primary-800
+      focus:outline-none focus:ring-2 focus:ring-accent-500">
+      <option value="" disabled>
+        Select a country
+      </option>
+      {countries.map((country) => (
+        <option key={country.name} value={country.name.toLowerCase()}>
+          {country.flag} {country.name}
         </option>
       ))}
     </select>
   );
 }
-
-export default SelectCountry;

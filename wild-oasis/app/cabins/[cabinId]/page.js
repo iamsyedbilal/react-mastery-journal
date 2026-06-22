@@ -1,3 +1,4 @@
+import TextExpander from "@/app/_components/TextExpender";
 import { getCabin, getCabins } from "@/app/_lib/data-service";
 import Image from "next/image";
 
@@ -45,7 +46,7 @@ export default async function Page({ params }) {
           </h1>
 
           <p className="text-lg leading-relaxed text-primary-200">
-            {cabin.description}
+            <TextExpander>{cabin.description}</TextExpander>
           </p>
 
           <div className="flex gap-6 text-sm text-primary-300">
