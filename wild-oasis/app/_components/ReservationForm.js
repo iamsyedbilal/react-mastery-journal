@@ -1,8 +1,10 @@
 "use client";
 
+import { useReservation } from "./ReservationContext";
+
 function ReservationForm({ cabin }) {
+  const { range } = useReservation();
   const maxCapacity = cabin.maxCapacity;
-  console.log(maxCapacity);
 
   return (
     <div
@@ -16,6 +18,12 @@ function ReservationForm({ cabin }) {
       <h3 className="mb-6 text-xl font-medium text-accent-500">
         Reservation details
       </h3>
+
+      {range?.from && range?.to && (
+        <p>
+          {String(range.from)} to {String(range.to)}
+        </p>
+      )}
 
       <form className="space-y-6">
         {/* GUESTS */}

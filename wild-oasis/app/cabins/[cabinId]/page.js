@@ -4,6 +4,7 @@ import { getCabin, getCabins } from "@/app/_lib/data-service";
 import Image from "next/image";
 import { Suspense } from "react";
 import Loading from "../loading";
+import ReservationReminder from "@/app/_components/ReservationReminder";
 
 export async function generateMetadata({ params }) {
   const { cabinId } = await params;
@@ -82,6 +83,7 @@ export default async function Page({ params }) {
         {/* RIGHT */}
         <Suspense fallback={<Loading />}>
           <Reservation cabin={cabin} />
+          <ReservationReminder />
         </Suspense>
       </div>
     </div>
