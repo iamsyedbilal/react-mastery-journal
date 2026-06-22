@@ -1,6 +1,9 @@
+import Reservation from "@/app/_components/Reservation";
 import TextExpander from "@/app/_components/TextExpender";
 import { getCabin, getCabins } from "@/app/_lib/data-service";
 import Image from "next/image";
+import { Suspense } from "react";
+import Loading from "../loading";
 
 export async function generateMetadata({ params }) {
   const { cabinId } = await params;
@@ -15,9 +18,9 @@ export async function generateMetadata({ params }) {
 export async function generateStaticParams() {
   const cabins = await getCabins();
 
-  const ids = cabins.map((cabin) => ({ cabinId: String(cabin.id) }));
-
-  return ids;
+  return cabins.map((cabin) => ({
+    cabinId: String(cabin.id),
+  }));
 }
 
 export default async function Page({ params }) {
@@ -25,84 +28,61 @@ export default async function Page({ params }) {
   const cabin = await getCabin(cabinId);
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12 text-primary-100">
-      {/* HERO IMAGE */}
-      <div className="relative h-[50vh] w-full overflow-hidden rounded-2xl border border-primary-800">
+    <div className="mx-auto max-w-7xl px-6 py-12 text-primary-100">
+      {/* HERO */}
+      <div className="relative h-[60vh] overflow-hidden rounded-3xl border border-primary-800">
         <Image
           src={cabin.image}
           alt={cabin.name}
           fill
-          className="object-cover"
           priority
+          className="object-cover"
         />
+
+        <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent" />
       </div>
 
-      {/* CONTENT GRID */}
-      <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-10">
-        {/* LEFT: DESCRIPTION */}
-        <div className="lg:col-span-2 space-y-6">
-          <h1 className="text-4xl font-light text-accent-500">
+      {/* CONTENT */}
+      <div className="mt-14 grid grid-cols-1 lg:grid-cols-[1.7fr_0.9fr] gap-16">
+        {/* LEFT */}
+        <div>
+          <h1 className="text-5xl font-light text-accent-500 mb-8">
             Cabin {cabin.name}
           </h1>
 
-          <p className="text-lg leading-relaxed text-primary-200">
-            <TextExpander>{cabin.description}</TextExpander>
-          </p>
-
-          <div className="flex gap-6 text-sm text-primary-300">
-            <span>
-              Max guests:{" "}
-              <span className="text-primary-100 font-semibold">
-                {cabin.maxCapacity}
-              </span>
-            </span>
-
-            <span>
-              Created:{" "}
-              <span className="text-primary-100">
-                {new Date(cabin.created_at).toDateString()}
-              </span>
-            </span>
-          </div>
-        </div>
-
-        {/* RIGHT: BOOKING CARD */}
-        <div className="lg:col-span-1">
-          <div className="sticky top-10 rounded-2xl border border-primary-800 bg-primary-950 p-6 shadow-lg">
-            <h3 className="text-accent-500 text-xl mb-4 font-semibold">
-              Pricing
-            </h3>
-
-            <div className="mb-6">
-              {cabin.discount > 0 ? (
-                <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-light text-primary-50">
-                    ${cabin.regularPrice - cabin.discount}
-                  </span>
-                  <span className="line-through text-primary-500">
-                    ${cabin.regularPrice}
-                  </span>
-                </div>
-              ) : (
-                <span className="text-3xl font-light text-primary-50">
-                  ${cabin.regularPrice}
-                </span>
-              )}
-
-              <p className="text-primary-300 text-sm mt-1">per night</p>
-            </div>
-
-            <button
-              className="w-full rounded-xl bg-accent-500 px-6 py-4 font-semibold text-primary-900
-              transition-all hover:bg-accent-600 hover:shadow-[0_0_30px_rgba(198,153,99,0.3)]">
-              Reserve this cabin →
-            </button>
-
-            <p className="text-xs text-primary-400 mt-4 text-center">
-              No payment required today
+          <div className="space-y-8">
+            <p className="text-lg leading-relaxed text-primary-200">
+              <TextExpander>{cabin.description}</TextExpander>
             </p>
+
+            <div className="flex flex-wrap gap-10 border-t border-primary-800 pt-6 text-sm text-primary-300">
+              <div>
+                <p className="uppercase tracking-wider text-primary-500 mb-1">
+                  Max Guests
+                </p>
+
+                <p className="text-primary-100 font-semibold">
+                  {cabin.maxCapacity}
+                </p>
+              </div>
+
+              <div>
+                <p className="uppercase tracking-wider text-primary-500 mb-1">
+                  Created
+                </p>
+
+                <p className="text-primary-100">
+                  {new Date(cabin.created_at).toDateString()}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* RIGHT */}
+        <Suspense fallback={<Loading />}>
+          <Reservation cabin={cabin} />
+        </Suspense>
       </div>
     </div>
   );
