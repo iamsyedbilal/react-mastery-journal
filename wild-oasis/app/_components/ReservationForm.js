@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useReservation } from "./ReservationContext";
 
-function ReservationForm({ cabin }) {
+function ReservationForm({ cabin, user }) {
   const { range } = useReservation();
   const maxCapacity = cabin.maxCapacity;
 
@@ -15,9 +16,24 @@ function ReservationForm({ cabin }) {
         bg-primary-950
         p-6
       ">
-      <h3 className="mb-6 text-xl font-medium text-accent-500">
-        Reservation details
-      </h3>
+      <div className="flex mb-6 items-center justify-between">
+        <h3 className=" text-xl font-medium text-accent-500">
+          Reservation details
+        </h3>
+
+        <div className="flex gap-2  items-center">
+          <Image
+            // Important to display google profile images
+            width={22}
+            height={22}
+            referrerPolicy="no-referrer"
+            className="rounded-full"
+            src={user.image}
+            alt={user.name}
+          />
+          <p>{user.name}</p>
+        </div>
+      </div>
 
       {range?.from && range?.to && (
         <p>
