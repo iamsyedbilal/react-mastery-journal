@@ -11,13 +11,14 @@ export const formatDistanceFromNow = (dateStr) =>
 
 function ReservationCard({ booking, onDelete }) {
   const {
-    id,
+    id: bookingId,
     startDate,
     endDate,
     numNights,
     totalPrice,
     numGuests,
     created_at,
+    observations,
     cabins: { name, image },
   } = booking;
 
@@ -64,18 +65,39 @@ function ReservationCard({ booking, onDelete }) {
         </p>
 
         {/* Footer */}
-        <div className="mt-auto flex items-center justify-between pt-4">
-          <div className="flex items-center gap-3 text-sm text-primary-300">
-            <span className="text-accent-400 font-semibold">${totalPrice}</span>
-            <span className="opacity-40">•</span>
-            <span>
-              {numGuests} guest{numGuests > 1 && "s"}
-            </span>
+        {/* Footer */}
+        <div className="mt-auto pt-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3 text-sm text-primary-300">
+              <span className="text-accent-400 font-semibold">
+                ${totalPrice}
+              </span>
+              <span className="opacity-40">•</span>
+              <span>
+                {numGuests} guest{numGuests > 1 && "s"}
+              </span>
+            </div>
           </div>
 
-          <span className="text-[11px] text-primary-500">
-            Booked {format(new Date(created_at), "MMM dd, p")}
-          </span>
+          {/* Observations */}
+          <div className="mt-4 rounded-xl border border-primary-800 bg-primary-900/40 p-4">
+            <p className="text-[11px] uppercase tracking-widest text-primary-500 mb-2">
+              Notes
+            </p>
+
+            <p className="text-sm leading-relaxed text-primary-300">
+              {observations?.trim() ? (
+                observations
+              ) : (
+                <span className="italic text-primary-500">
+                  No special requests or additional information provided.
+                </span>
+              )}
+            </p>
+            <span className="text-[11px] text-primary-500">
+              Booked {format(new Date(created_at), "MMM dd, p")}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -83,7 +105,7 @@ function ReservationCard({ booking, onDelete }) {
       <div className="flex flex-col w-14 border-l border-primary-800">
         {!past && (
           <Link
-            href={`/account/reservations/edit/${id}`}
+            href={`/account/reservation/edit/${bookingId}`}
             className="flex flex-1 items-center justify-center hover:bg-primary-900 transition">
             <PencilSquareIcon className="h-5 w-5 text-primary-400 group-hover:text-accent-400 transition" />
           </Link>
@@ -91,8 +113,7 @@ function ReservationCard({ booking, onDelete }) {
 
         {!past && (
           <div className="flex flex-1  hover:bg-red-400 text-white items-center justify-center border-t border-primary-800">
-            {/* keep your DeleteReservation here */}
-            <DeleteReservation bookingId={id} onDelete={onDelete} />
+            <DeleteReservation bookingId={bookingId} onDelete={onDelete} />
           </div>
         )}
       </div>
