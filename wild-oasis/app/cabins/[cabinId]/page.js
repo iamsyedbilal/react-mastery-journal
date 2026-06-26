@@ -31,7 +31,7 @@ export default async function Page({ params }) {
   return (
     <div className="mx-auto max-w-6xl px-6 py-12 text-primary-100">
       {/* HERO */}
-      <div className="relative h-[42vh] min-h-[320px] overflow-hidden rounded-2xl border border-primary-800">
+      <div className="relative h-[42vh] min-h-80 overflow-hidden rounded-2xl border border-primary-800">
         <Image
           src={cabin.image}
           alt={cabin.name}
