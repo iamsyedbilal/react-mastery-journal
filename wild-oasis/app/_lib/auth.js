@@ -24,16 +24,18 @@ export const {
         const existingGuest = await getGuest(user.email);
 
         if (!existingGuest) {
-          await createGuest({ email: user.name, fullName: user.name });
+          await createGuest({ email: user.email, fullName: user.name });
         }
 
         return true;
       } catch (error) {
+        console.error("SignIn error:", error);
         return false;
       }
     },
     async session({ session, user }) {
       const guest = await getGuest(session.user.email);
+      if (!guest) return session;
       session.user.guestId = guest.id;
       return session;
     },
