@@ -29,9 +29,9 @@ export default async function Page({ params }) {
   const cabin = await getCabin(cabinId);
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-12 text-primary-100">
+    <div className="mx-auto max-w-6xl px-6 py-12 text-primary-100">
       {/* HERO */}
-      <div className="relative h-[60vh] overflow-hidden rounded-3xl border border-primary-800">
+      <div className="relative h-[42vh] min-h-[320px] overflow-hidden rounded-2xl border border-primary-800">
         <Image
           src={cabin.image}
           alt={cabin.name}
@@ -40,47 +40,47 @@ export default async function Page({ params }) {
           className="object-cover"
         />
 
-        <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent" />
+
+        <div className="absolute inset-x-0 bottom-0 p-8">
+          <h1 className="text-4xl font-light tracking-tight text-white sm:text-5xl">
+            Cabin {cabin.name}
+          </h1>
+        </div>
       </div>
 
       {/* CONTENT */}
-      <div className="mt-14 grid grid-cols-1 lg:grid-cols-[1.7fr_0.9fr] gap-16">
+      <div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-[1fr_400px] lg:items-start lg:gap-10">
         {/* LEFT */}
-        <div>
-          <h1 className="text-5xl font-light text-accent-500 mb-8">
-            Cabin {cabin.name}
-          </h1>
+        <div className="space-y-8">
+          <p className="text-lg leading-relaxed text-primary-200">
+            <TextExpander>{cabin.description}</TextExpander>
+          </p>
 
-          <div className="space-y-8">
-            <p className="text-lg leading-relaxed text-primary-200">
-              <TextExpander>{cabin.description}</TextExpander>
-            </p>
+          <div className="flex flex-wrap gap-10 border-t border-primary-800 pt-6 text-sm text-primary-300">
+            <div>
+              <p className="mb-1 uppercase tracking-wider text-primary-500">
+                Max guests
+              </p>
 
-            <div className="flex flex-wrap gap-10 border-t border-primary-800 pt-6 text-sm text-primary-300">
-              <div>
-                <p className="uppercase tracking-wider text-primary-500 mb-1">
-                  Max Guests
-                </p>
+              <p className="font-semibold text-primary-100">
+                {cabin.maxCapacity}
+              </p>
+            </div>
 
-                <p className="text-primary-100 font-semibold">
-                  {cabin.maxCapacity}
-                </p>
-              </div>
+            <div>
+              <p className="mb-1 uppercase tracking-wider text-primary-500">
+                Listed since
+              </p>
 
-              <div>
-                <p className="uppercase tracking-wider text-primary-500 mb-1">
-                  Created
-                </p>
-
-                <p className="text-primary-100">
-                  {new Date(cabin.created_at).toDateString()}
-                </p>
-              </div>
+              <p className="text-primary-100">
+                {new Date(cabin.created_at).toDateString()}
+              </p>
             </div>
           </div>
         </div>
 
-        {/* RIGHT */}
+        {/* RIGHT — booking widget */}
         <Suspense fallback={<Loading />}>
           <Reservation cabin={cabin} />
           <ReservationReminder />

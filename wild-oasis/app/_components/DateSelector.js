@@ -1,7 +1,14 @@
 "use client";
 
-import { DayPicker } from "@daypicker/react";
-import "@daypicker/react/style.css";
+import {
+  differenceInDays,
+  format,
+  isPast,
+  isSameDay,
+  isWithinInterval,
+} from "date-fns";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 import { useReservation } from "./ReservationContext";
 
 function isAlreadyBooked(range, datesArr) {
@@ -9,85 +16,82 @@ function isAlreadyBooked(range, datesArr) {
     range.from &&
     range.to &&
     datesArr.some((date) =>
-      isWithinInterval(date, { start: range.from, end: range.to }),
+      isWithinInterval(date, {
+        start: range.from,
+        end: range.to,
+      }),
     )
   );
 }
 
 function DateSelector({ settings, bookingDates, cabin }) {
   const { range, setRange, resetRange } = useReservation();
-  const regularPrice = cabin.regularPrice;
-  const discount = cabin.discount;
 
+  const displayRange = isAlreadyBooked(range, bookingDates) ? {} : range;
+
+  const { regularPrice, discount } = cabin;
   const { minBookingLength, maxBookingLength } = settings;
 
+  const hasRange = Boolean(displayRange.from && displayRange.to);
+  const numOfNights = hasRange
+    ? differenceInDays(displayRange.to, displayRange.from)
+    : 0;
+  const cabinPrice = numOfNights * (regularPrice - discount);
+
   return (
-    <div
-      className="
-        rounded-2xl
-        border
-        border-primary-800
-        bg-primary-950
-        p-6
-      ">
-      <div className="mb-8">
-        <h3 className="text-xl font-medium text-accent-500">
-          Select your stay
-        </h3>
-
-        <p className="mt-1 text-sm text-primary-400">
-          Choose check-in and check-out dates
-        </p>
-      </div>
-
-      {/* PRICE */}
-      <div className="mb-8 border-b border-primary-800 pb-6">
-        {discount > 0 ? (
-          <div className="flex items-center gap-3">
-            <span className="text-4xl font-light text-primary-50">
-              ${regularPrice - discount}
-            </span>
-
-            <span className="text-primary-500 line-through">
-              ${regularPrice}
-            </span>
-
-            <span className="rounded-full bg-accent-500/10 px-3 py-1 text-xs text-accent-500">
-              Save ${discount}
-            </span>
-          </div>
-        ) : (
-          <span className="text-4xl font-light text-primary-50">
-            ${regularPrice}
-          </span>
-        )}
-
-        <p className="mt-2 text-sm text-primary-400">per night</p>
-      </div>
-
-      {/* CALENDAR */}
-      <div className="flex justify-center">
+    <div>
+      <div
+        className="flex justify-center [&_.rdp]:m-0"
+        style={{
+          "--rdp-accent-color": "var(--color-accent-500)",
+          "--rdp-accent-color-dark": "var(--color-accent-600)",
+          "--rdp-background-color": "var(--color-primary-800)",
+          "--rdp-outline": "2px solid var(--color-accent-500)",
+          "--rdp-outline-selected": "2px solid var(--color-accent-400)",
+          "--rdp-selected-color": "var(--color-primary-900)",
+        }}>
         <DayPicker
-          onSelect={setRange}
-          selected={range}
-          min={minBookingLength}
-          max={maxBookingLength}
           mode="range"
+          onSelect={setRange}
+          selected={displayRange}
+          min={minBookingLength + 1}
+          max={maxBookingLength}
           fromMonth={new Date()}
           fromDate={new Date()}
-          toYear={new Date().getFullYear()}
+          toYear={new Date().getFullYear() + 5}
           numberOfMonths={2}
           captionLayout="dropdown"
+          disabled={(curDate) =>
+            isPast(curDate) ||
+            bookingDates.some((date) => isSameDay(date, curDate))
+          }
         />
       </div>
 
-      {range.from || range.to ? (
-        <button
-          className="border border-primary-800 py-2 px-4 text-sm font-semibold"
-          onClick={resetRange}>
-          Clear
-        </button>
-      ) : null}
+      <div className="mt-5 flex items-center justify-between gap-4 border-t border-primary-800 pt-4 text-sm">
+        {hasRange ? (
+          <p className="text-primary-300">
+            <span className="font-semibold text-primary-100">
+              {format(displayRange.from, "MMM d")} –{" "}
+              {format(displayRange.to, "MMM d")}
+            </span>{" "}
+            · {numOfNights} {numOfNights === 1 ? "night" : "nights"} ·{" "}
+            <span className="font-semibold text-accent-500">${cabinPrice}</span>
+          </p>
+        ) : (
+          <p className="text-primary-500">
+            Select your check-in and check-out dates
+          </p>
+        )}
+
+        {(range.from || range.to) && (
+          <button
+            onClick={resetRange}
+            className="shrink-0 rounded-lg border border-primary-700 px-3 py-1.5 text-xs font-medium text-primary-300 transition hover:border-primary-500 hover:text-primary-100">
+            Clear
+          </button>
+        )}
+      </div>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import { deleteReservation } from "../_lib/actions";
 import { useTransition } from "react";
 
-export default function DeleteReservation({ bookingId }) {
+export default function DeleteReservation({ bookingId, onDelete }) {
   const [isPending, startTransition] = useTransition();
 
   function handleDelete() {
@@ -14,9 +14,7 @@ export default function DeleteReservation({ bookingId }) {
 
     if (!confirmed) return;
 
-    startTransition(async () => {
-      await deleteReservation(bookingId);
-    });
+    startTransition(() => onDelete(bookingId));
   }
 
   return (

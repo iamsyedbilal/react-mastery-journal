@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🌲 The Wild Oasis
 
-## Getting Started
+A modern hotel/cabin booking web application built with **Next.js 16 (App Router)**, inspired by Jonas Schmedtmann’s Ultimate Next.js course on Udemy.
 
-First, run the development server:
+The Wild Oasis allows users to browse cabins, make reservations, manage bookings, and update their profile — all powered by a server-first architecture with Supabase.
+
+---
+
+## 🚀 Live Demo
+
+> (Add your deployed link here later)
+
+---
+
+## 📸 Screenshots
+
+![screenshot](./public/app-screenshot.png)
+
+---
+
+## 🧠 Features
+
+- 🏡 Browse luxury cabins
+- 📅 Book available dates with dynamic pricing
+- 👤 Google authentication (NextAuth)
+- 📋 Manage reservations (edit / delete bookings)
+- 🧾 Guest profile management
+- 🔐 Secure server actions (Next.js Server Actions)
+- ⚡ Supabase backend integration
+- 📱 Fully responsive UI
+- 🎨 Modern UI with Tailwind CSS
+
+---
+
+## 🛠️ Tech Stack
+
+- **Next.js 16 (App Router)**
+- **React**
+- **Tailwind CSS**
+- **Supabase (Database)**
+- **NextAuth.js (Authentication)**
+- **date-fns**
+- **Server Actions (Next.js)**
+- **Vercel (Deployment)**
+
+---
+
+## ⚙️ Getting Started
+
+### 1. Clone the repo
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/iamsyedbilal/react-mastery-journal/wild-oasis
+cd wild-oasis
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
